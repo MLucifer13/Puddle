@@ -6,16 +6,21 @@
     <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
         <h2 class="mb-12 text-2xl text-center">My items</h2>
         
-        <div class="grid grid-cols-3 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {% for item in items %}
-            <a href="{% url 'item:detail' item.id %}">
-                <div>
-                    <!-- Setting fixed height and width with object-cover for uniform image sizes -->
-                    <img src="{{ item.image.url }}" class="w-full h-48 object-cover rounded-t-xl">
+            <a href="{% url 'item:detail' item.id %}" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-200">
+                <div class="aspect-w-16 aspect-h-12 w-full">
+                    <img 
+                        src="{{ item.image.url }}" 
+                        class="w-full h-full object-cover rounded-t-xl"
+                        alt="{{ item.name }}"
+                        loading="lazy"
+                    >
                 </div>
-                <div class="p-6 bg-white rounded-b-xl">
-                    <h2 class="text-2xl">{{ item.name }}</h2>
-                    <p class="text-gray-500">Price: {{ item.price }}</p>
+                <!-- Content Section -->
+                <div class="p-6">
+                    <h2 class="text-xl font-semibold truncate">{{ item.name }}</h2>
+                    <p class="text-gray-500 mt-2">Price: {{ item.price }}</p>
                 </div>
             </a>
             {% endfor %}
@@ -25,12 +30,12 @@
     <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
         <h2 class="mb-12 text-2xl text-center">Categories</h2>
 
-        <div class="grid grid-cols-3 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {% for category in categories %}
-            <a href="#">
-                <div class="p-6 bg-white rounded-b-xl">
-                    <h2 class="text-2xl">{{ category.name }}</h2>
-                    <p class="text-gray-500">{{ category.items.count }} items</p>
+            <a href="#" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-200">
+                <div class="p-6">
+                    <h2 class="text-xl font-semibold truncate">{{ category.name }}</h2>
+                    <p class="text-gray-500 mt-2">{{ category.items.count }} items</p>
                 </div>
             </a>
             {% endfor %}

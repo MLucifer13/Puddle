@@ -4,6 +4,7 @@
 
 {% block content %}
 <div class="pb-6 grid grid-cols-4 gap-4 bg-gray-100">
+    <!-- Sidebar for Search and Categories -->
     <div class="col-span-1">
         <form method="get" action="{% url 'item:items' %}">
             <input name="query" class="w-full py-4 px-6 border rounded-xl" type="text" value="{{ query }}" placeholder="Find a bike, a chair or a car">
@@ -13,7 +14,6 @@
         <hr class="my-6">
 
         <p class="font-semibold">Categories</p>
-
         <ul>
             {% for category in categories %}
             <li class="py-2 px-2 rounded-xl {% if category.id == category_id %} bg-gray-200 {% endif %}">
@@ -25,31 +25,32 @@
         <hr class="my-6">
 
         <p class="font-semibold">Clear filters</p>
-
         <ul>
             <li><a href="{% url 'item:items' %}" class="mt-2 py-4 px-8 inline-block bg-yellow-500 text-lg rounded-xl text-white">Clear</a></li>
         </ul>
     </div>
 
+    <!-- Items Grid -->
     <div class="col-span-3">
-        <div class="grid grid-cols-3 gap-3">
+        <div class="grid grid-cols-3 gap-6">
             {% if items %}
                 {% for item in items %}
-                <a href="{% url 'item:detail' item.id %}">
-                    <div>
-                        <img src="{{ item.image.url }}" class="rounded-t-xl">
+                <a href="{% url 'item:detail' item.id %}" class="bg-gray-100 rounded-xl h-full flex flex-col overflow-hidden">
+                    <!-- Fixed height for images -->
+                    <div class="h-56">
+                        <img src="{{ item.image.url }}" class="w-full h-full object-cover rounded-t-xl">
                     </div>
-                    <div class="p-6 bg-white rounded-b-xl">
-                        <h2 class="text-2xl">{{ item.name }}</h2>
-                        <p class="text-gray-500">Price: {{ item.price }}</p>
+                    <!-- Content Section -->
+                    <div class="p-6 bg-white flex-grow rounded-b-xl flex flex-col">
+                        <h2 class="text-xl font-semibold">{{ item.name }}</h2>
+                        <p class="text-gray-500 mt-2">Price: {{ item.price }}</p>
                     </div>
                 </a>
                 {% endfor %}
             {% else %}
-                <p>No items found.</p>
+                <p class="text-center col-span-3 text-gray-500">No items found.</p>
             {% endif %}
         </div>
     </div>
 </div>
-
 {% endblock %}
